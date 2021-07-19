@@ -1,20 +1,36 @@
+
+import connection.DatabaseConnection;
+import java.awt.Window;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import utils.FormatHelper;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nizam
  */
 public class TransaksiMasuk extends javax.swing.JFrame {
 
+    private int berat = 0, total = 0, harga = 0;
+    private String date = "";
+
+    FormatHelper formater = new FormatHelper();
+
     /**
      * Creates new form TransaksiMasuk
      */
     public TransaksiMasuk() {
         initComponents();
+        getBaseHarga();
+
     }
 
     /**
@@ -28,20 +44,20 @@ public class TransaksiMasuk extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        tot = new javax.swing.JLabel();
+        deskripsi = new javax.swing.JLabel();
+        bharga = new javax.swing.JLabel();
+        tgl = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jComboBox4 = new javax.swing.JComboBox();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        edtBerat = new javax.swing.JFormattedTextField();
+        btnCalculate = new javax.swing.JButton();
         txBaseHarga = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txTotal = new javax.swing.JLabel();
+        edtDeskripsiTransaksi = new javax.swing.JTextField();
+        btnConfirm = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,61 +71,76 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(100, 0, 240, 40);
 
-        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel4.setText("Total");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 170, 34, 14);
+        tot.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        tot.setText("Total");
+        jPanel1.add(tot);
+        tot.setBounds(20, 170, 34, 14);
 
-        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel5.setText("Detail Transaksi");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(20, 230, 100, 16);
+        deskripsi.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        deskripsi.setText("Deskripsi");
+        jPanel1.add(deskripsi);
+        deskripsi.setBounds(20, 250, 100, 16);
 
-        jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel6.setText("Base Harga");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(20, 140, 80, 16);
+        bharga.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        bharga.setText("Base Harga");
+        jPanel1.add(bharga);
+        bharga.setBounds(20, 140, 80, 16);
 
-        jLabel7.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel7.setText("Tgl. Transaksi");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(20, 200, 110, 20);
+        tgl.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        tgl.setText("Tgl. Transaksi");
+        jPanel1.add(tgl);
+        tgl.setBounds(20, 200, 110, 20);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(160, 200, 57, 20);
+        jComboBox2.setBounds(160, 200, 70, 30);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(230, 200, 57, 20);
+        jComboBox3.setBounds(240, 200, 70, 30);
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox4);
-        jComboBox4.setBounds(300, 200, 57, 20);
-        jPanel1.add(jFormattedTextField1);
-        jFormattedTextField1.setBounds(160, 70, 150, 30);
+        jComboBox4.setBounds(320, 200, 70, 30);
+        jPanel1.add(edtBerat);
+        edtBerat.setBounds(160, 70, 150, 30);
 
-        jButton1.setText("Hitung");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(330, 70, 70, 30);
+        btnCalculate.setText("Hitung");
+        btnCalculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCalculate);
+        btnCalculate.setBounds(330, 70, 70, 30);
 
         txBaseHarga.setText("-");
         jPanel1.add(txBaseHarga);
-        txBaseHarga.setBounds(160, 140, 4, 14);
+        txBaseHarga.setBounds(160, 130, 240, 30);
 
-        jLabel9.setText("-");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(160, 170, 4, 14);
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(160, 230, 210, 50);
+        txTotal.setText("-");
+        jPanel1.add(txTotal);
+        txTotal.setBounds(160, 160, 250, 30);
+        jPanel1.add(edtDeskripsiTransaksi);
+        edtDeskripsiTransaksi.setBounds(160, 250, 210, 50);
 
-        jButton2.setText("Simpan");
-        jPanel1.add(jButton2);
-        jButton2.setBounds(190, 310, 110, 30);
+        btnConfirm.setText("Simpan");
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnConfirm);
+        btnConfirm.setBounds(190, 330, 110, 30);
 
-        jButton3.setText("Batal");
-        jPanel1.add(jButton3);
-        jButton3.setBounds(310, 310, 90, 30);
+        btnCancel.setText("Batal");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancel);
+        btnCancel.setBounds(310, 330, 90, 30);
 
         jLabel8.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel8.setText("Jumlah satuan (Kg)");
@@ -129,6 +160,48 @@ public class TransaksiMasuk extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateActionPerformed
+        System.out.println("Lagi menghitung");
+
+        String rawBerat = edtBerat.getText();
+        berat = Integer.parseInt(rawBerat);
+
+        total = berat * harga;
+        String formatedTotal = formater.formatNumberToThousand(total);
+
+        txTotal.setText(formatedTotal);
+
+        System.out.println(total);
+    }//GEN-LAST:event_btnCalculateActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        if (total == 0) {
+            JOptionPane.showMessageDialog(null, "Total masih kosong, Jangan lupa untuk tekan tombol hitung terlebih dahulu!");
+        } else if ("sukses".equals(saveTransaksiMasuk())) {
+            int dialog = JOptionPane.showOptionDialog(null, "Berhasil menambahkan transaksi masuk! apakah anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (dialog == JOptionPane.OK_OPTION) {
+                JComponent comp = (JComponent) evt.getSource();
+                Window win = SwingUtilities.getWindowAncestor(comp);
+                win.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
+
+        }
+
+        edtBerat.setText("");
+        edtDeskripsiTransaksi.setText("");
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int dialog = JOptionPane.showOptionDialog(null, "Apakah anda yakin untuk membatalkan?", "Cancel", JOptionPane.OK_CANCEL_OPTION, JOptionPane.CANCEL_OPTION, null, null, null);
+        if (dialog == JOptionPane.OK_OPTION) {
+            JComponent comp = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(comp);
+            win.dispose();
+        }
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,23 +238,62 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         });
     }
 
+    private String saveTransaksiMasuk() {
+        String status;
+        String weight = berat + " Kg";
+        String desc = edtDeskripsiTransaksi.getText();
+        try {
+            Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+            String sqlQuery = "INSERT INTO transaksi_masuk (berat, total, deskripsi, tanggal_trans_masuk) VALUES ('%s','%d','%s','%s')";
+            sqlQuery = String.format(sqlQuery, weight, total, desc, date);
+
+            statement.execute(sqlQuery);
+            status = "sukses";
+        } catch (Exception e) {
+            status = "gagal";
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    private void getBaseHarga() {
+        date = formater.getTodayDate();
+        try {
+            Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+            String sqlStatement = "SELECT * FROM base_harga";
+            ResultSet res = statement.executeQuery(sqlStatement);
+
+            while (res.next()) {
+                harga = res.getInt("harga");
+
+                statement.close();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan karena : " + e);
+        }
+
+        txBaseHarga.setText("Rp." + harga);
+        txBaseHarga.paintImmediately(txBaseHarga.getVisibleRect());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel bharga;
+    private javax.swing.JButton btnCalculate;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnConfirm;
+    private javax.swing.JLabel deskripsi;
+    private javax.swing.JFormattedTextField edtBerat;
+    private javax.swing.JTextField edtDeskripsiTransaksi;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel tgl;
+    private javax.swing.JLabel tot;
     private javax.swing.JLabel txBaseHarga;
+    private javax.swing.JLabel txTotal;
     // End of variables declaration//GEN-END:variables
 }

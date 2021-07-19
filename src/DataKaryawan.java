@@ -1,9 +1,17 @@
+
+import connection.DatabaseConnection;
+import java.awt.Window;
+import java.sql.Statement;
+import java.util.Arrays;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nizam
@@ -28,12 +36,14 @@ public class DataKaryawan extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jLabel5 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        edtConfirmPassword = new javax.swing.JPasswordField();
+        edtPassword = new javax.swing.JPasswordField();
+        edtUsername = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,32 +56,44 @@ public class DataKaryawan extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(130, 10, 240, 20);
 
-        jLabel2.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jLabel2.setText("Id Karyawan");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(30, 60, 100, 20);
-
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel3.setText("Username");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 90, 80, 16);
+        jLabel3.setBounds(40, 80, 80, 16);
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel4.setText("Password");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(30, 120, 54, 16);
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(140, 60, 200, 20);
+        jLabel4.setBounds(40, 140, 54, 16);
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel5.setText("Confirm-Password");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(40, 200, 102, 16);
+
+        btnCancel.setText("Batal");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(140, 90, 200, 20);
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(140, 120, 200, 20);
+        jPanel1.add(btnCancel);
+        btnCancel.setBounds(350, 310, 110, 40);
+
+        btnSave.setText("Simpan");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSave);
+        btnSave.setBounds(210, 310, 110, 40);
+        jPanel1.add(edtConfirmPassword);
+        edtConfirmPassword.setBounds(200, 190, 250, 40);
+        jPanel1.add(edtPassword);
+        edtPassword.setBounds(200, 130, 250, 40);
+        jPanel1.add(edtUsername);
+        edtUsername.setBounds(200, 70, 250, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,9 +115,31 @@ public class DataKaryawan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if ("sukses".equals(saveKaryawan())) {
+            int dialog = JOptionPane.showOptionDialog(null, "Berhasil menambahkan Karyawan! apakah anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (dialog == JOptionPane.OK_OPTION) {
+                JComponent comp = (JComponent) evt.getSource();
+                Window win = SwingUtilities.getWindowAncestor(comp);
+                win.dispose();
+            }
+            edtUsername.setText("");
+            edtPassword.setText("");
+            edtConfirmPassword.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
+        }
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int dialog = JOptionPane.showOptionDialog(null, "Apakah anda yakin untuk membatalkan?", "Cancel", JOptionPane.OK_CANCEL_OPTION, JOptionPane.CANCEL_OPTION, null, null, null);
+        if (dialog == JOptionPane.OK_OPTION) {
+            JComponent comp = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(comp);
+            win.dispose();
+        }
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,14 +176,48 @@ public class DataKaryawan extends javax.swing.JFrame {
         });
     }
 
+    private String saveKaryawan() {
+        String status = "", username;
+        char[] password, confirmPassword;
+        username = edtUsername.getText();
+        password = edtPassword.getPassword();
+        confirmPassword = edtConfirmPassword.getPassword();
+
+        if (username.isBlank() || username.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Username tidak boleh kosong!");
+
+        } else if (!Arrays.equals(password, confirmPassword)) {
+            JOptionPane.showMessageDialog(null, "Password tidak cocok!");
+
+        } else {
+            try {
+                String fixPassword = String.valueOf(password);
+                Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+                String sqlQuery = "INSERT INTO user (username, password) VALUES ('%s','%s')";
+                sqlQuery = String.format(sqlQuery, username, fixPassword);
+
+                statement.execute(sqlQuery);
+                status = "sukses";
+
+            } catch (Exception e) {
+                status = "gagal";
+                e.printStackTrace();
+            }
+        }
+
+        return status;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JPasswordField edtConfirmPassword;
+    private javax.swing.JPasswordField edtPassword;
+    private javax.swing.JTextField edtUsername;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

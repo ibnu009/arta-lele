@@ -72,13 +72,13 @@ public class login extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Username");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(80, 120, 60, 16);
+        jLabel3.setBounds(50, 120, 80, 30);
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Password");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(80, 150, 60, 16);
+        jLabel4.setBounds(50, 160, 80, 30);
 
         jTextField1.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,9 +87,9 @@ public class login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(160, 120, 150, 20);
+        jTextField1.setBounds(130, 120, 170, 30);
         jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(160, 150, 150, 20);
+        jPasswordField1.setBounds(130, 160, 170, 30);
 
         loginBtn.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         loginBtn.setText("Login");
@@ -99,7 +99,7 @@ public class login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(loginBtn);
-        loginBtn.setBounds(190, 180, 61, 25);
+        loginBtn.setBounds(160, 210, 80, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
