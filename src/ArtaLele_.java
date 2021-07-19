@@ -147,7 +147,7 @@ public class ArtaLele_ extends javax.swing.JFrame {
         dk.setVisible(true);
         dk.pack();
         dk.setLocationRelativeTo(null);
-        dk.setDefaultCloseOperation(ArtaLele_.EXIT_ON_CLOSE);
+        dk.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_dftrkManuItemActionPerformed
 
     private void masukMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masukMenuItemActionPerformed
@@ -156,7 +156,7 @@ public class ArtaLele_ extends javax.swing.JFrame {
         tm.setVisible(true);
         tm.pack();
         tm.setLocationRelativeTo(null);
-        tm.setDefaultCloseOperation(ArtaLele_.EXIT_ON_CLOSE);
+        tm.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_masukMenuItemActionPerformed
 
     private void keluarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarMenuItemActionPerformed
@@ -165,7 +165,7 @@ public class ArtaLele_ extends javax.swing.JFrame {
         tk.setVisible(true);
         tk.pack();
         tk.setLocationRelativeTo(null);
-        tk.setDefaultCloseOperation(ArtaLele_.EXIT_ON_CLOSE);
+        tk.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_keluarMenuItemActionPerformed
 
     private void laporanmMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanmMenuItemActionPerformed

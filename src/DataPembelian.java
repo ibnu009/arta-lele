@@ -43,7 +43,7 @@ public class DataPembelian extends javax.swing.JFrame {
         edtNewBaseHarga = new javax.swing.JTextField();
         baseHargaText = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -84,9 +84,14 @@ public class DataPembelian extends javax.swing.JFrame {
         jPanel1.add(btnConfirm);
         btnConfirm.setBounds(230, 220, 100, 30);
 
-        jButton2.setText("Batal");
-        jPanel1.add(jButton2);
-        jButton2.setBounds(350, 220, 73, 30);
+        btnCancel.setText("Batal");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancel);
+        btnCancel.setBounds(350, 220, 73, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,8 +121,11 @@ public class DataPembelian extends javax.swing.JFrame {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
             String sqlQuery = "UPDATE base_harga SET harga='%d' WHERE id=1";
             sqlQuery = String.format(sqlQuery, newBaseHarga);
+
             statement.execute(sqlQuery);
             edtNewBaseHarga.setText("");
+            
+            statement.close();
 
             int dialog = JOptionPane.showOptionDialog(null, "Berhasil mengubah base harga! apakah Anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (dialog == JOptionPane.OK_OPTION) {
@@ -130,6 +138,15 @@ public class DataPembelian extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int dialog = JOptionPane.showOptionDialog(null, "Apakah anda yakin untuk membatalkan?", "Cancel", JOptionPane.OK_CANCEL_OPTION, JOptionPane.CANCEL_OPTION, null, null, null);
+        if (dialog == JOptionPane.OK_OPTION) {
+            JComponent comp = (JComponent) evt.getSource();
+            Window win = SwingUtilities.getWindowAncestor(comp);
+            win.dispose();
+        }
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,8 +187,9 @@ public class DataPembelian extends javax.swing.JFrame {
         int harga = 0;
         try {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
-            String sqlQuery = "SELECT * FROM base_harga";
-            ResultSet res = statement.executeQuery(sqlQuery);
+            
+            String sqlStatement = "SELECT * FROM base_harga";
+            ResultSet res = statement.executeQuery(sqlStatement);
 
             while (res.next()) {
                 harga = res.getInt("harga");
@@ -183,14 +201,15 @@ public class DataPembelian extends javax.swing.JFrame {
             System.out.println("Terjadi kesalahan karena : " + e);
         }
 
+//        Nampilin
         baseHargaText.setText("Rp." + harga);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel baseHargaText;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JTextField edtNewBaseHarga;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
