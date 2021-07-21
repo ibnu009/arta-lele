@@ -3,6 +3,7 @@ import connection.DatabaseConnection;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -19,18 +20,37 @@ import utils.FormatHelper;
  */
 public class TransaksiMasuk extends javax.swing.JFrame {
 
-    private int berat = 0, total = 0, harga = 0;
+    private int berat = 0, total = 0, harga = 0, idUser = 0;
     private String date = "";
+    String statusSave;
+    private Date rDate;
+
+    private int noTransaksi = 0;
 
     FormatHelper formater = new FormatHelper();
 
     /**
      * Creates new form TransaksiMasuk
+     *
+     * @param noTrans
      */
     public TransaksiMasuk() {
         initComponents();
         getBaseHarga();
+    }
 
+    public TransaksiMasuk(int idUser) {
+        this.idUser = idUser;
+        initComponents();
+        getBaseHarga();
+    }
+
+    public TransaksiMasuk(int noTrans, int idUser) {
+        this.noTransaksi = noTrans;
+        this.idUser = idUser;
+        initComponents();
+        getBaseHarga();
+        initiateEditView();
     }
 
     /**
@@ -43,15 +63,11 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        txTrans = new javax.swing.JLabel();
         tot = new javax.swing.JLabel();
         deskripsi = new javax.swing.JLabel();
         bharga = new javax.swing.JLabel();
         tgl = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox4 = new javax.swing.JComboBox();
-        edtBerat = new javax.swing.JFormattedTextField();
         btnCalculate = new javax.swing.JButton();
         txBaseHarga = new javax.swing.JLabel();
         txTotal = new javax.swing.JLabel();
@@ -59,17 +75,19 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        edtBerat = new javax.swing.JFormattedTextField();
+        btnDatePicker = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TRANSAKSI MASUK");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(100, 0, 240, 40);
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("TRANSAKSI MASUK");
+        jPanel1.add(txTrans);
+        txTrans.setBounds(0, 0, 420, 40);
 
         tot.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         tot.setText("Total");
@@ -90,20 +108,6 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         tgl.setText("Tgl. Transaksi");
         jPanel1.add(tgl);
         tgl.setBounds(20, 200, 110, 20);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(160, 200, 70, 30);
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox3);
-        jComboBox3.setBounds(240, 200, 70, 30);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox4);
-        jComboBox4.setBounds(320, 200, 70, 30);
-        jPanel1.add(edtBerat);
-        edtBerat.setBounds(160, 70, 150, 30);
 
         btnCalculate.setText("Hitung");
         btnCalculate.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +150,16 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         jLabel8.setText("Jumlah satuan (Kg)");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(20, 70, 120, 20);
+        jPanel1.add(edtBerat);
+        edtBerat.setBounds(160, 70, 150, 30);
+
+        btnDatePicker.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDatePickerMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnDatePicker);
+        btnDatePicker.setBounds(160, 200, 150, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,35 +176,52 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateActionPerformed
-        System.out.println("Lagi menghitung");
 
         String rawBerat = edtBerat.getText();
-        berat = Integer.parseInt(rawBerat);
+        if (rawBerat.isEmpty() || rawBerat.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Jangan lupa isi beratnya terlebih dahulu!");
+        } else if ("0".equals(rawBerat)) {
+            JOptionPane.showMessageDialog(null, "Berat tidak boleh angka 0!");
+        } else {
+            berat = Integer.parseInt(rawBerat);
 
-        total = berat * harga;
-        String formatedTotal = formater.formatNumberToThousand(total);
+            total = berat * harga;
+            String formatedTotal = formater.formatNumberToThousand(total);
 
-        txTotal.setText(formatedTotal);
+            txTotal.setText(formatedTotal);
 
-        System.out.println(total);
+            System.out.println(total);
+        }
     }//GEN-LAST:event_btnCalculateActionPerformed
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+
         if (total == 0) {
             JOptionPane.showMessageDialog(null, "Total masih kosong, Jangan lupa untuk tekan tombol hitung terlebih dahulu!");
-        } else if ("sukses".equals(saveTransaksiMasuk())) {
+        } else if ("suksesSave".equals(saveTransaksiMasuk())) {
             int dialog = JOptionPane.showOptionDialog(null, "Berhasil menambahkan transaksi masuk! apakah anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (dialog == JOptionPane.OK_OPTION) {
                 JComponent comp = (JComponent) evt.getSource();
                 Window win = SwingUtilities.getWindowAncestor(comp);
                 win.dispose();
             }
+        } else if ("suksesUpdate".equals(saveTransaksiMasuk())) {
+            int dialog = JOptionPane.showOptionDialog(null, "Berhasil mengubah data! apakah anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (dialog == JOptionPane.OK_OPTION) {
+                JComponent comp = (JComponent) evt.getSource();
+                Window win = SwingUtilities.getWindowAncestor(comp);
+                win.dispose();
+
+                LaporanMasuk lm = new LaporanMasuk(idUser);
+                lm.setVisible(true);
+                lm.pack();
+                lm.setLocationRelativeTo(null);
+                lm.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
-
         }
 
-        edtBerat.setText("");
         edtDeskripsiTransaksi.setText("");
     }//GEN-LAST:event_btnConfirmActionPerformed
 
@@ -202,6 +233,10 @@ public class TransaksiMasuk extends javax.swing.JFrame {
             win.dispose();
         }
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnDatePickerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDatePickerMouseClicked
+
+    }//GEN-LAST:event_btnDatePickerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -239,25 +274,97 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     }
 
     private String saveTransaksiMasuk() {
-        String status;
         String weight = berat + " Kg";
         String desc = edtDeskripsiTransaksi.getText();
+
+        btnDatePicker.setDateFormatString("dd MMMM yyyy");
+        Date rawDate = btnDatePicker.getDate();
+        date = formater.convertDateToProperDate(rawDate);
+
+        if ("".equals(date)) {
+            date = formater.getTodayDate();
+        }
+
+        if (noTransaksi > 0) {
+            try {
+                Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+                String sqlQuery = "UPDATE transaksi_masuk SET berat='%s', total=%d, deskripsi='%s' WHERE no_trans_masuk=%d";
+                sqlQuery = String.format(sqlQuery, weight, total, desc, noTransaksi);
+
+                statement.execute(sqlQuery);
+                statusSave = "suksesUpdate";
+            } catch (Exception e) {
+                statusSave = "gagalUpdate";
+                e.printStackTrace();
+
+            }
+
+        } else {
+            try {
+                Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+                String sqlQuery = "INSERT INTO transaksi_masuk (id_user, berat, total, deskripsi, tanggal_trans_masuk) VALUES ('%d','%s','%d','%s','%s')";
+                sqlQuery = String.format(sqlQuery, idUser, weight, total, desc, date);
+
+                statement.execute(sqlQuery);
+                statusSave = "suksesSave";
+            } catch (Exception e) {
+                statusSave = "gagalSave";
+                e.printStackTrace();
+            }
+        }
+
+        return statusSave;
+    }
+
+    private void initiateEditView() {
         try {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
-            String sqlQuery = "INSERT INTO transaksi_masuk (berat, total, deskripsi, tanggal_trans_masuk) VALUES ('%s','%d','%s','%s')";
-            sqlQuery = String.format(sqlQuery, weight, total, desc, date);
+            String sqlStatement = "SELECT * FROM transaksi_masuk WHERE no_trans_masuk='%d'";
+            sqlStatement = String.format(sqlStatement, noTransaksi);
 
-            statement.execute(sqlQuery);
-            status = "sukses";
+            ResultSet res = statement.executeQuery(sqlStatement);
+
+            if (res.next()) {
+                idUser = res.getInt("id_user");
+                total = res.getInt("total");
+                String rawBerat = res.getString("berat");
+                berat = formater.convertBeratToInteger(rawBerat);
+
+                String desc = res.getString("deskripsi");
+                date = res.getString("tanggal_trans_masuk");
+
+                rDate = formater.convertStringToDate(date);
+                btnDatePicker.setDate(rDate);
+
+                String formatedTotal = formater.formatNumberToThousand(total);
+
+                String onlyNumberBerat = formater.extractNumberFromString(rawBerat);
+                edtBerat.setText(onlyNumberBerat);
+                edtDeskripsiTransaksi.setText(desc);
+                txTotal.setText(formatedTotal);
+            }
         } catch (Exception e) {
-            status = "gagal";
             e.printStackTrace();
         }
-        return status;
     }
 
     private void getBaseHarga() {
-        date = formater.getTodayDate();
+        btnDatePicker.setDateFormatString("dd MMMM yyyy");
+
+        try {
+            String today = formater.getTodayDate();
+
+            rDate = formater.convertStringToDate(today);
+            btnDatePicker.setDate(rDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (noTransaksi > 0) {
+            txTrans.setText("EDIT TRANSAKSI MASUK");
+        } else {
+            txTrans.setText("TAMBAH TRANSAKSI MASUK");
+        }
         try {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
             String sqlStatement = "SELECT * FROM base_harga";
@@ -265,12 +372,11 @@ public class TransaksiMasuk extends javax.swing.JFrame {
 
             while (res.next()) {
                 harga = res.getInt("harga");
-
-                statement.close();
             }
 
         } catch (Exception e) {
             System.out.println("Terjadi kesalahan karena : " + e);
+            e.printStackTrace();
         }
 
         txBaseHarga.setText("Rp." + harga);
@@ -282,18 +388,16 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     private javax.swing.JButton btnCalculate;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
+    private com.toedter.calendar.JDateChooser btnDatePicker;
     private javax.swing.JLabel deskripsi;
     private javax.swing.JFormattedTextField edtBerat;
     private javax.swing.JTextField edtDeskripsiTransaksi;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel tgl;
     private javax.swing.JLabel tot;
     private javax.swing.JLabel txBaseHarga;
     private javax.swing.JLabel txTotal;
+    private javax.swing.JLabel txTrans;
     // End of variables declaration//GEN-END:variables
 }

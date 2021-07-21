@@ -10,10 +10,18 @@
  */
 public class ArtaLele_ extends javax.swing.JFrame {
 
+    private int idUser = 0;
+
     /**
      * Creates new form ArtaLele_
      */
     public ArtaLele_() {
+        initComponents();
+    }
+
+    public ArtaLele_(int idUser) {
+        this.idUser = idUser;
+        System.out.println("Idnya adalah " + this.idUser);
         initComponents();
     }
 
@@ -108,6 +116,11 @@ public class ArtaLele_ extends javax.swing.JFrame {
         jMenu3.add(laporanmMenuItem);
 
         laporankMenuItem.setText("Keluar");
+        laporankMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporankMenuItemActionPerformed(evt);
+            }
+        });
         jMenu3.add(laporankMenuItem);
 
         jMenuBar1.add(jMenu3);
@@ -152,7 +165,7 @@ public class ArtaLele_ extends javax.swing.JFrame {
 
     private void masukMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masukMenuItemActionPerformed
         // go to TransaksiMasuk
-        TransaksiMasuk tm = new TransaksiMasuk();
+        TransaksiMasuk tm = new TransaksiMasuk(idUser);
         tm.setVisible(true);
         tm.pack();
         tm.setLocationRelativeTo(null);
@@ -161,7 +174,7 @@ public class ArtaLele_ extends javax.swing.JFrame {
 
     private void keluarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarMenuItemActionPerformed
         // go to TransaksiKeluar
-        TransaksiKeluar tk = new TransaksiKeluar();
+        TransaksiKeluar tk = new TransaksiKeluar(idUser);
         tk.setVisible(true);
         tk.pack();
         tk.setLocationRelativeTo(null);
@@ -169,8 +182,19 @@ public class ArtaLele_ extends javax.swing.JFrame {
     }//GEN-LAST:event_keluarMenuItemActionPerformed
 
     private void laporanmMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanmMenuItemActionPerformed
-        // Tgo to Laporan
+        LaporanMasuk lm = new LaporanMasuk();
+        lm.setVisible(true);
+        lm.pack();
+        lm.setLocationRelativeTo(null);
+        lm.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_laporanmMenuItemActionPerformed
+
+    private void laporankMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporankMenuItemActionPerformed
+        LaporanKeluar lk = new LaporanKeluar(idUser);
+        lk.setVisible(true);
+        lk.pack();
+        lk.setLocationRelativeTo(null);
+        lk.setDefaultCloseOperation(ArtaLele_.DISPOSE_ON_CLOSE);    }//GEN-LAST:event_laporankMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,14 +1,24 @@
+
+import connection.DatabaseConnection;
+import java.awt.Window;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author nizam
  */
 public class login extends javax.swing.JFrame {
+
+    private int idUser;
 
     /**
      * Creates new form login
@@ -32,9 +42,9 @@ public class login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        edtUsername = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
+        edtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
@@ -80,16 +90,14 @@ public class login extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(50, 160, 80, 30);
 
-        jTextField1.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        edtUsername.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        edtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                edtUsernameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(130, 120, 170, 30);
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(130, 160, 170, 30);
+        jPanel1.add(edtUsername);
+        edtUsername.setBounds(130, 120, 170, 30);
 
         loginBtn.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         loginBtn.setText("Login");
@@ -100,6 +108,8 @@ public class login extends javax.swing.JFrame {
         });
         jPanel1.add(loginBtn);
         loginBtn.setBounds(160, 210, 80, 40);
+        jPanel1.add(edtPassword);
+        edtPassword.setBounds(130, 160, 170, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,17 +131,41 @@ public class login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void edtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_edtUsernameActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // go to ArtaLele
-        ArtaLele_ al = new ArtaLele_();
-        al.setVisible(true);
-        al.pack();
-        al.setLocationRelativeTo(null);
-        al.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
+        String username = edtUsername.getText(), password;
+        char[] rawPassword = edtPassword.getPassword();
+        password = String.valueOf(rawPassword);
+        try {
+            Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+            String sqlStatement = "SELECT * FROM user WHERE username='%s' AND password='%s'";
+            sqlStatement = String.format(sqlStatement, username, password);
+            ResultSet res = statement.executeQuery(sqlStatement);
+
+            if (res.next()) {
+                // go to ArtaLele
+                idUser = res.getInt("id_user");
+
+                ArtaLele_ al = new ArtaLele_(idUser);
+                al.setVisible(true);
+                al.pack();
+                al.setLocationRelativeTo(null);
+                al.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
+
+                // menutup form sekarang
+                JComponent comp = (JComponent) evt.getSource();
+                Window win = SwingUtilities.getWindowAncestor(comp);
+                win.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Password atau Username salah!");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
@@ -170,14 +204,14 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField edtPassword;
+    private javax.swing.JTextField edtUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton loginBtn;
     // End of variables declaration//GEN-END:variables
 }
