@@ -37,58 +37,31 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         edtUsername = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
         edtPassword = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(153, 153, 153));
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 380, 20);
-
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("WELCOME");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(100, 20, 170, 70);
-
-        jLabel2.setText("Please insert your Username and Password");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(80, 70, 300, 30);
-
-        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Username");
+        jLabel3.setText("Login");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(50, 120, 80, 30);
+        jLabel3.setBounds(520, 110, 410, 70);
 
-        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Password");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 160, 80, 30);
+        jLabel4.setBounds(620, 310, 80, 30);
 
         edtUsername.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         edtUsername.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +70,7 @@ public class login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(edtUsername);
-        edtUsername.setBounds(130, 120, 170, 30);
+        edtUsername.setBounds(620, 230, 230, 40);
 
         loginBtn.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         loginBtn.setText("Login");
@@ -107,25 +80,32 @@ public class login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(loginBtn);
-        loginBtn.setBounds(160, 210, 80, 40);
+        loginBtn.setBounds(650, 430, 160, 40);
         jPanel1.add(edtPassword);
-        edtPassword.setBounds(130, 160, 170, 30);
+        edtPassword.setBounds(620, 340, 230, 40);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/arta-login3.jpg"))); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(0, 0, 447, 650);
+
+        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Username");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(620, 200, 80, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         pack();
@@ -207,12 +187,11 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField edtPassword;
     private javax.swing.JTextField edtUsername;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginBtn;
     // End of variables declaration//GEN-END:variables
 }

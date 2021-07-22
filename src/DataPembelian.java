@@ -37,42 +37,38 @@ public class DataPembelian extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         edtNewBaseHarga = new javax.swing.JTextField();
         baseHargaText = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(244, 252, 252));
         jPanel1.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("BASE HARGA");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(150, 0, 160, 30);
-
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel1.setText("Base harga sekarang");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(30, 40, 130, 20);
+        jLabel1.setBounds(30, 100, 170, 40);
 
-        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel4.setText("Base harga baru");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(30, 80, 120, 20);
+        jLabel4.setBounds(30, 180, 160, 40);
         jPanel1.add(edtNewBaseHarga);
-        edtNewBaseHarga.setBounds(190, 70, 160, 30);
+        edtNewBaseHarga.setBounds(210, 180, 260, 40);
 
+        baseHargaText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         baseHargaText.setText("-");
         jPanel1.add(baseHargaText);
-        baseHargaText.setBounds(190, 40, 150, 20);
+        baseHargaText.setBounds(210, 100, 240, 40);
 
         btnConfirm.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         btnConfirm.setText("Konfirmasi");
@@ -82,7 +78,7 @@ public class DataPembelian extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfirm);
-        btnConfirm.setBounds(230, 220, 100, 30);
+        btnConfirm.setBounds(240, 270, 150, 40);
 
         btnCancel.setText("Batal");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +87,31 @@ public class DataPembelian extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCancel);
-        btnCancel.setBounds(350, 220, 73, 30);
+        btnCancel.setBounds(410, 270, 120, 40);
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("BASE HARGA");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 560, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,14 +119,14 @@ public class DataPembelian extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,5 +236,6 @@ public class DataPembelian extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

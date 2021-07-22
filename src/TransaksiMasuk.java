@@ -63,7 +63,6 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txTrans = new javax.swing.JLabel();
         tot = new javax.swing.JLabel();
         deskripsi = new javax.swing.JLabel();
         bharga = new javax.swing.JLabel();
@@ -77,37 +76,33 @@ public class TransaksiMasuk extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         edtBerat = new javax.swing.JFormattedTextField();
         btnDatePicker = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        txTrans = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(246, 251, 252));
         jPanel1.setLayout(null);
 
-        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txTrans.setText("TRANSAKSI MASUK");
-        jPanel1.add(txTrans);
-        txTrans.setBounds(0, 0, 420, 40);
-
-        tot.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        tot.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         tot.setText("Total");
         jPanel1.add(tot);
-        tot.setBounds(20, 170, 34, 14);
+        tot.setBounds(20, 210, 70, 20);
 
-        deskripsi.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        deskripsi.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         deskripsi.setText("Deskripsi");
         jPanel1.add(deskripsi);
-        deskripsi.setBounds(20, 250, 100, 16);
+        deskripsi.setBounds(20, 320, 140, 20);
 
-        bharga.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        bharga.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         bharga.setText("Base Harga");
         jPanel1.add(bharga);
-        bharga.setBounds(20, 140, 80, 16);
+        bharga.setBounds(20, 170, 120, 20);
 
-        tgl.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        tgl.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         tgl.setText("Tgl. Transaksi");
         jPanel1.add(tgl);
-        tgl.setBounds(20, 200, 110, 20);
+        tgl.setBounds(20, 250, 150, 40);
 
         btnCalculate.setText("Hitung");
         btnCalculate.addActionListener(new java.awt.event.ActionListener() {
@@ -116,17 +111,19 @@ public class TransaksiMasuk extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCalculate);
-        btnCalculate.setBounds(330, 70, 70, 30);
+        btnCalculate.setBounds(420, 100, 80, 40);
 
+        txBaseHarga.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txBaseHarga.setText("-");
         jPanel1.add(txBaseHarga);
-        txBaseHarga.setBounds(160, 130, 240, 30);
+        txBaseHarga.setBounds(210, 160, 280, 40);
 
+        txTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txTotal.setText("-");
         jPanel1.add(txTotal);
-        txTotal.setBounds(160, 160, 250, 30);
+        txTotal.setBounds(210, 200, 290, 40);
         jPanel1.add(edtDeskripsiTransaksi);
-        edtDeskripsiTransaksi.setBounds(160, 250, 210, 50);
+        edtDeskripsiTransaksi.setBounds(210, 300, 290, 60);
 
         btnConfirm.setText("Simpan");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +132,7 @@ public class TransaksiMasuk extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfirm);
-        btnConfirm.setBounds(190, 330, 110, 30);
+        btnConfirm.setBounds(210, 380, 140, 40);
 
         btnCancel.setText("Batal");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -144,14 +141,14 @@ public class TransaksiMasuk extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCancel);
-        btnCancel.setBounds(310, 330, 90, 30);
+        btnCancel.setBounds(370, 380, 130, 40);
 
-        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel8.setText("Jumlah satuan (Kg)");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(20, 70, 120, 20);
+        jLabel8.setBounds(20, 100, 160, 40);
         jPanel1.add(edtBerat);
-        edtBerat.setBounds(160, 70, 150, 30);
+        edtBerat.setBounds(210, 100, 190, 40);
 
         btnDatePicker.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -159,17 +156,43 @@ public class TransaksiMasuk extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnDatePicker);
-        btnDatePicker.setBounds(160, 200, 150, 30);
+        btnDatePicker.setBounds(210, 250, 290, 40);
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setForeground(new java.awt.Color(255, 255, 255));
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("TRANSAKSI KELUAR");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(txTrans, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 620, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         );
 
         pack();
@@ -394,6 +417,7 @@ public class TransaksiMasuk extends javax.swing.JFrame {
     private javax.swing.JTextField edtDeskripsiTransaksi;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel tgl;
     private javax.swing.JLabel tot;
     private javax.swing.JLabel txBaseHarga;

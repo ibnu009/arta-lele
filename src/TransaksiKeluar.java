@@ -56,7 +56,6 @@ public class TransaksiKeluar extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txTrans = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -67,34 +66,30 @@ public class TransaksiKeluar extends javax.swing.JFrame {
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnDatePicker = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        txTrans = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(242, 246, 245));
         jPanel1.setLayout(null);
 
-        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txTrans.setText("TRANSAKSI KELUAR");
-        jPanel1.add(txTrans);
-        txTrans.setBounds(0, 0, 540, 40);
-
-        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel3.setText("Total Transaksi Keluar");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 70, 130, 20);
+        jLabel3.setBounds(50, 110, 160, 30);
 
-        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel4.setText("Tgl.Transaksi Keluar");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(30, 120, 130, 20);
+        jLabel4.setBounds(50, 160, 160, 30);
 
-        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel5.setText("Detail Transaksi Keluar");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(30, 160, 140, 30);
+        jLabel5.setBounds(50, 200, 170, 40);
         jPanel1.add(edtDeskripsi);
-        edtDeskripsi.setBounds(190, 160, 160, 30);
+        edtDeskripsi.setBounds(240, 200, 310, 80);
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bensin", "Membeli bibit baru", "Membeli Pakan", "Perlengkapan" }));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
@@ -103,16 +98,16 @@ public class TransaksiKeluar extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbKategori);
-        cmbKategori.setBounds(190, 210, 160, 30);
+        cmbKategori.setBounds(240, 290, 310, 40);
 
-        jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel6.setText("Jenis Transaksi");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(30, 210, 90, 20);
+        jLabel6.setBounds(50, 290, 120, 30);
 
         edtTotal.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jPanel1.add(edtTotal);
-        edtTotal.setBounds(190, 60, 160, 30);
+        edtTotal.setBounds(240, 100, 310, 40);
 
         btnConfirm.setText("Simpan");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +116,7 @@ public class TransaksiKeluar extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConfirm);
-        btnConfirm.setBounds(250, 300, 80, 30);
+        btnConfirm.setBounds(320, 370, 110, 40);
 
         btnCancel.setText("Batal");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -130,24 +125,49 @@ public class TransaksiKeluar extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCancel);
-        btnCancel.setBounds(347, 300, 70, 30);
+        btnCancel.setBounds(450, 370, 100, 40);
         jPanel1.add(btnDatePicker);
-        btnDatePicker.setBounds(190, 110, 160, 30);
+        btnDatePicker.setBounds(240, 150, 310, 40);
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setForeground(new java.awt.Color(255, 255, 255));
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("TRANSAKSI KELUAR");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(txTrans, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 620, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -347,6 +367,7 @@ public class TransaksiKeluar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel txTrans;
     // End of variables declaration//GEN-END:variables
 }

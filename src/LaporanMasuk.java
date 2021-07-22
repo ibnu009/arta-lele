@@ -1,5 +1,7 @@
 
 import connection.DatabaseConnection;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -75,14 +77,18 @@ public class LaporanMasuk extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLaporanMasuk = new javax.swing.JTable();
-        edtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        txTrans = new javax.swing.JLabel();
         btnPrint = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        txTrans = new javax.swing.JLabel();
+        cmbBulan = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         tblLaporanMasuk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,15 +101,10 @@ public class LaporanMasuk extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblLaporanMasuk.setRowHeight(30);
         jScrollPane1.setViewportView(tblLaporanMasuk);
 
-        edtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                edtSearchKeyReleased(evt);
-            }
-        });
-
-        btnSearch.setText("Cari");
+        btnSearch.setText("Filter");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -124,10 +125,6 @@ public class LaporanMasuk extends javax.swing.JFrame {
             }
         });
 
-        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txTrans.setText("RIWAYAT TRANSAKSI MASUK");
-
         btnPrint.setText("Cetak Laporan");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,38 +132,60 @@ public class LaporanMasuk extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(116, 234, 246));
+
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setForeground(new java.awt.Color(255, 255, 255));
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("LAPORAN TRANSAKSI MASUK");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txTrans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cmbBulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(edtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addComponent(cmbBulan, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                 .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(62, 62, 62)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
-            .addComponent(txTrans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(45, 45, 45))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbBulan))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -197,12 +216,6 @@ public class LaporanMasuk extends javax.swing.JFrame {
         searchData();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void edtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtSearchKeyReleased
-        if (edtSearch.getText().isBlank() || edtSearch.getText().isEmpty()) {
-            searchData();
-        }
-    }//GEN-LAST:event_edtSearchKeyReleased
-
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (noTransMasuk > 0) {
 
@@ -225,7 +238,7 @@ public class LaporanMasuk extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void searchData() {
-        String tanggal = edtSearch.getText();
+        String tanggal = String.valueOf(cmbBulan.getSelectedItem());
 
         int rowCount = tblLaporanMasuk.getRowCount();
         for (int i = 0; i < rowCount; i++) {
@@ -331,6 +344,11 @@ public class LaporanMasuk extends javax.swing.JFrame {
     }
 
     private void initiateData() {
+        tblLaporanMasuk.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblLaporanMasuk.getTableHeader().setOpaque(false);
+        tblLaporanMasuk.getTableHeader().setBackground(Color.BLUE);
+        tblLaporanMasuk.getTableHeader().setForeground(Color.WHITE);
+
         tblMasuk.addColumn("No Transaksi");
         tblMasuk.addColumn("Pencatat");
         tblMasuk.addColumn("Berat");
@@ -384,7 +402,8 @@ public class LaporanMasuk extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JTextField edtSearch;
+    private javax.swing.JComboBox<String> cmbBulan;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLaporanMasuk;
     private javax.swing.JLabel txTrans;

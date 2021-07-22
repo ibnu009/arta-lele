@@ -1,11 +1,15 @@
 
 import connection.DatabaseConnection;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,11 +22,24 @@ import javax.swing.SwingUtilities;
  */
 public class DataKaryawan extends javax.swing.JFrame {
 
+    DefaultTableModel tblModelKaryawan = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    };
+
+    private int idUser;
+
     /**
      * Creates new form DataKaryawan
      */
     public DataKaryawan() {
         initComponents();
+        initiateTable();
+
+        initiateData();
     }
 
     /**
@@ -35,50 +52,111 @@ public class DataKaryawan extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         edtConfirmPassword = new javax.swing.JPasswordField();
         edtPassword = new javax.swing.JPasswordField();
         edtUsername = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblKaryawan = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        txTrans = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(248, 250, 252));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DATA KARYAWAN");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(130, 10, 240, 20);
-
-        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel3.setText("Username");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(40, 80, 80, 16);
+        jLabel3.setBounds(340, 120, 130, 40);
 
-        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel4.setText("Password");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(40, 140, 54, 16);
+        jLabel4.setBounds(340, 180, 100, 40);
 
-        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 18)); // NOI18N
         jLabel5.setText("Confirm-Password");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 200, 102, 16);
+        jLabel5.setBounds(340, 240, 150, 40);
 
-        btnCancel.setText("Batal");
+        btnCancel.setText("Keluar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
             }
         });
         jPanel1.add(btnCancel);
-        btnCancel.setBounds(350, 310, 110, 40);
+        btnCancel.setBounds(630, 340, 110, 40);
+
+        btnDelete.setText("Hapus");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDelete);
+        btnDelete.setBounds(490, 340, 110, 40);
+        jPanel1.add(edtConfirmPassword);
+        edtConfirmPassword.setBounds(500, 240, 250, 40);
+        jPanel1.add(edtPassword);
+        edtPassword.setBounds(500, 180, 250, 40);
+        jPanel1.add(edtUsername);
+        edtUsername.setBounds(500, 120, 250, 40);
+
+        tblKaryawan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblKaryawan.setRowHeight(30);
+        tblKaryawan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKaryawanMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblKaryawan);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 120, 290, 260);
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setForeground(new java.awt.Color(255, 255, 255));
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("DATA KARYAWAN");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(txTrans, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(0, 0, 780, 70);
 
         btnSave.setText("Simpan");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -87,13 +165,7 @@ public class DataKaryawan extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnSave);
-        btnSave.setBounds(210, 310, 110, 40);
-        jPanel1.add(edtConfirmPassword);
-        edtConfirmPassword.setBounds(200, 190, 250, 40);
-        jPanel1.add(edtPassword);
-        edtPassword.setBounds(200, 130, 250, 40);
-        jPanel1.add(edtUsername);
-        edtUsername.setBounds(200, 70, 250, 40);
+        btnSave.setBounds(350, 340, 110, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,7 +173,7 @@ public class DataKaryawan extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,30 +187,53 @@ public class DataKaryawan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if ("sukses".equals(saveKaryawan())) {
-            int dialog = JOptionPane.showOptionDialog(null, "Berhasil menambahkan Karyawan! apakah anda ingin keluar?", "Sukses", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-            if (dialog == JOptionPane.OK_OPTION) {
-                JComponent comp = (JComponent) evt.getSource();
-                Window win = SwingUtilities.getWindowAncestor(comp);
-                win.dispose();
-            }
-            edtUsername.setText("");
-            edtPassword.setText("");
-            edtConfirmPassword.setText("");
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        if (idUser == 1) {
+            JOptionPane.showMessageDialog(null, "Anda tidak bisa menghapus akun admin!");
+
         } else {
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
+            if ("sukses".equals(deleteKaryawan())) {
+                JOptionPane.showMessageDialog(null, "Berhasil menghapus karyawan!");
+                initiateData();
+            } else {
+                JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
+            }
         }
-    }//GEN-LAST:event_btnSaveActionPerformed
+
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        int dialog = JOptionPane.showOptionDialog(null, "Apakah anda yakin untuk membatalkan?", "Cancel", JOptionPane.OK_CANCEL_OPTION, JOptionPane.CANCEL_OPTION, null, null, null);
+        int dialog = JOptionPane.showOptionDialog(null, "Apakah anda yakin untuk keluar?", "Cancel", JOptionPane.OK_CANCEL_OPTION, JOptionPane.CANCEL_OPTION, null, null, null);
         if (dialog == JOptionPane.OK_OPTION) {
             JComponent comp = (JComponent) evt.getSource();
             Window win = SwingUtilities.getWindowAncestor(comp);
             win.dispose();
         }
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+
+        if ("sukses".equals(saveKaryawan())) {
+            JOptionPane.showMessageDialog(null, "Berhasil menambahkan karyawan!");
+
+            edtUsername.setText("");
+            edtPassword.setText("");
+            edtConfirmPassword.setText("");
+
+            initiateData();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void tblKaryawanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKaryawanMouseClicked
+        int row = tblKaryawan.rowAtPoint(evt.getPoint());
+        String rawIdUser = tblKaryawan.getModel().getValueAt(row, 0).toString();
+        idUser = Integer.parseInt(rawIdUser);
+    }//GEN-LAST:event_tblKaryawanMouseClicked
 
     /**
      * @param args the command line arguments
@@ -175,7 +270,28 @@ public class DataKaryawan extends javax.swing.JFrame {
         });
     }
 
+    private String deleteKaryawan() {
+        refreshTable();
+
+        String status;
+        try {
+            Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+
+            String sqlQuery = "DELETE FROM user WHERE id_user='%d'";
+            sqlQuery = String.format(sqlQuery, idUser);
+            statement.execute(sqlQuery);
+
+            status = "sukses";
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = "gagal";
+        }
+
+        return status;
+    }
+
     private String saveKaryawan() {
+
         String status = "", username;
         char[] password, confirmPassword;
         username = edtUsername.getText();
@@ -194,7 +310,7 @@ public class DataKaryawan extends javax.swing.JFrame {
                 sqlQuery = String.format(sqlQuery, username, fixPassword);
 
                 statement.execute(sqlQuery);
-                
+
                 status = "sukses";
 
             } catch (Exception e) {
@@ -206,16 +322,70 @@ public class DataKaryawan extends javax.swing.JFrame {
         return status;
     }
 
+    private void initiateData() {
+        refreshTable();
+        try {
+            int idUser;
+            String nama, password;
+
+            Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
+            String sqlStatement = "SELECT * FROM user";
+            ResultSet res = statement.executeQuery(sqlStatement);
+
+            while (res.next()) {
+                idUser = res.getInt("id_user");
+                nama = res.getString("username");
+                password = res.getString("password");
+
+                Object[] row = {
+                    idUser, nama, password
+                };
+
+                tblModelKaryawan.addRow(row);
+                tblModelKaryawan.fireTableDataChanged();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan karena : " + e);
+            e.printStackTrace();
+        }
+    }
+
+    private void refreshTable() {
+        int rowCount = tblKaryawan.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            tblModelKaryawan.removeRow(0);
+        }
+
+        tblModelKaryawan.fireTableDataChanged();
+    }
+
+    private void initiateTable() {
+        tblKaryawan.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblKaryawan.getTableHeader().setOpaque(false);
+        tblKaryawan.getTableHeader().setBackground(Color.BLUE);
+        tblKaryawan.getTableHeader().setForeground(Color.WHITE);
+
+        tblModelKaryawan.addColumn("ID");
+        tblModelKaryawan.addColumn("Nama");
+        tblModelKaryawan.addColumn("Password");
+        tblKaryawan.setModel(tblModelKaryawan);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSave;
     private javax.swing.JPasswordField edtConfirmPassword;
     private javax.swing.JPasswordField edtPassword;
     private javax.swing.JTextField edtUsername;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblKaryawan;
+    private javax.swing.JLabel txTrans;
     // End of variables declaration//GEN-END:variables
 }

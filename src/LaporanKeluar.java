@@ -1,5 +1,7 @@
 
 import connection.DatabaseConnection;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -54,20 +56,17 @@ public class LaporanKeluar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txTrans = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLaporanKeluar = new javax.swing.JTable();
         btnSearch = new javax.swing.JButton();
-        edtSearch = new javax.swing.JTextField();
+        cmbBulan = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        txTrans = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(752, 571));
-
-        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txTrans.setText("RIWAYAT TRANSAKSI KELUAR");
+        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         btnDelete.setText("Hapus");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +93,7 @@ public class LaporanKeluar extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblLaporanKeluar.setRowHeight(30);
         tblLaporanKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblLaporanKeluarMouseClicked(evt);
@@ -101,18 +101,38 @@ public class LaporanKeluar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblLaporanKeluar);
 
-        btnSearch.setText("Cari");
+        btnSearch.setText("Filter");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
             }
         });
 
-        edtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                edtSearchKeyReleased(evt);
-            }
-        });
+        cmbBulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+
+        jPanel1.setBackground(new java.awt.Color(116, 234, 246));
+
+        txTrans.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        txTrans.setForeground(new java.awt.Color(255, 255, 255));
+        txTrans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txTrans.setText("RIWAYAT TRANSAKSI KELUAR");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,29 +140,29 @@ public class LaporanKeluar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(edtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addComponent(cmbBulan, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
-            .addComponent(txTrans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(cmbBulan))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -192,12 +212,6 @@ public class LaporanKeluar extends javax.swing.JFrame {
         searchData();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void edtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtSearchKeyReleased
-        if (edtSearch.getText().isBlank() || edtSearch.getText().isEmpty()) {
-            searchData();
-        }
-    }//GEN-LAST:event_edtSearchKeyReleased
-
     private void tblLaporanKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLaporanKeluarMouseClicked
         int row = tblLaporanKeluar.rowAtPoint(evt.getPoint());
         String rawNoTransaksiKeluar = tblLaporanKeluar.getModel().getValueAt(row, 0).toString();
@@ -205,7 +219,7 @@ public class LaporanKeluar extends javax.swing.JFrame {
     }//GEN-LAST:event_tblLaporanKeluarMouseClicked
 
     private void searchData() {
-        String tanggal = edtSearch.getText();
+        String tanggal = String.valueOf(cmbBulan.getSelectedItem());
 
         int rowCount = tblLaporanKeluar.getRowCount();
         for (int i = 0; i < rowCount; i++) {
@@ -269,6 +283,12 @@ public class LaporanKeluar extends javax.swing.JFrame {
     }
 
     private void initiateData() {
+
+        tblLaporanKeluar.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tblLaporanKeluar.getTableHeader().setOpaque(false);
+        tblLaporanKeluar.getTableHeader().setBackground(Color.BLUE);
+        tblLaporanKeluar.getTableHeader().setForeground(Color.WHITE);
+
         tblKeluar.addColumn("No Transaksi");
         tblKeluar.addColumn("Pencatat");
         tblKeluar.addColumn("Total");
@@ -355,7 +375,8 @@ public class LaporanKeluar extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JTextField edtSearch;
+    private javax.swing.JComboBox<String> cmbBulan;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLaporanKeluar;
     private javax.swing.JLabel txTrans;
