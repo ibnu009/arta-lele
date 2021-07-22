@@ -189,9 +189,10 @@ public class DataPembelian extends javax.swing.JFrame {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
             
             String sqlStatement = "SELECT * FROM base_harga";
+            
             ResultSet res = statement.executeQuery(sqlStatement);
 
-            while (res.next()) {
+            if (res.next()) {
                 harga = res.getInt("harga");
             }
 

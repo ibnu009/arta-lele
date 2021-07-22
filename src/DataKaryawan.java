@@ -129,7 +129,6 @@ public class DataKaryawan extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan!");
         }
-
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -185,10 +184,8 @@ public class DataKaryawan extends javax.swing.JFrame {
 
         if (username.isBlank() || username.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Username tidak boleh kosong!");
-
         } else if (!Arrays.equals(password, confirmPassword)) {
             JOptionPane.showMessageDialog(null, "Password tidak cocok!");
-
         } else {
             try {
                 String fixPassword = String.valueOf(password);
@@ -197,6 +194,7 @@ public class DataKaryawan extends javax.swing.JFrame {
                 sqlQuery = String.format(sqlQuery, username, fixPassword);
 
                 statement.execute(sqlQuery);
+                
                 status = "sukses";
 
             } catch (Exception e) {

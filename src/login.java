@@ -139,12 +139,14 @@ public class login extends javax.swing.JFrame {
         String username = edtUsername.getText(), password;
         char[] rawPassword = edtPassword.getPassword();
         password = String.valueOf(rawPassword);
+        
         try {
             Statement statement = DatabaseConnection.getDatabaseConnection().createStatement();
             String sqlStatement = "SELECT * FROM user WHERE username='%s' AND password='%s'";
             sqlStatement = String.format(sqlStatement, username, password);
+            
             ResultSet res = statement.executeQuery(sqlStatement);
-
+            
             if (res.next()) {
                 // go to ArtaLele
                 idUser = res.getInt("id_user");
@@ -161,7 +163,6 @@ public class login extends javax.swing.JFrame {
                 win.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Password atau Username salah!");
-
             }
         } catch (Exception e) {
             e.printStackTrace();
